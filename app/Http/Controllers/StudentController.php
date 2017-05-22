@@ -15,7 +15,6 @@ class StudentController extends Controller
     public function index()
     {
         $courses = \App\Course::get();
-
         echo "hello world";
 
         return view('students/index', compact('courses'));
@@ -65,11 +64,7 @@ class StudentController extends Controller
 
     public function edit($id)
     {
-<<<<<<< HEAD
-        $student = Student::with('Courses')->find($id);
-=======
         $student = Student::find($id);
->>>>>>> master
         $courses = \App\Course::get();
 
         return view('students/edit', compact('student', 'courses'));
