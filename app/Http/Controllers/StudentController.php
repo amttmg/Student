@@ -2,14 +2,24 @@
 
 namespace App\Http\Controllers;
 
+use App\Repositories\Student\ElequentStudent;
+use App\Repositories\Student\StudentRepository;
 use Illuminate\Http\Request;
 use App\Student;
 
 class StudentController extends Controller
 {
-    public function __construct()
+    public $student;
+
+    public function __construct(StudentRepository $student)
     {
         $this->middleware('auth');
+        $this->student = $student;
+    }
+
+    public function data()
+    {
+     return $this->student->getAll();
     }
 
     public function index()
@@ -19,6 +29,7 @@ class StudentController extends Controller
 
         return view('students/index', compact('courses'));
     }
+
     public function create()
     {
         $courses = \App\Course::get();
