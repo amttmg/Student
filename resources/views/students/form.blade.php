@@ -41,6 +41,7 @@
     @endif
   </div>
   <div class="form-group {{ $errors->has('course') ? 'has-error' : '' }}">
+
     @foreach($courses as $course)
       <div class="checkbox">
         <label>
@@ -49,11 +50,14 @@
               name="course[]"
               value="{{ $course->id }}"
               @if(in_array( $course->id, (old('course'))?old('course'):[])) checked @endif
+              @if(in_array( $course->id, (old('course'))?old('course'):[])) checked @endif
+
               type="checkbox">
           {{ $course->name }}
         </label>
       </div>
     @endforeach
+
     @if ($errors->has('course'))
       <div class="help-block">
         {{ $errors->first('course') }}
