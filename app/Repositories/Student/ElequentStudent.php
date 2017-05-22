@@ -38,12 +38,14 @@ class ElequentStudent implements StudentRepository
 
     public function create($attributes)
     {
-        // TODO: Implement create() method.
+       return $this->student->create($attributes);
     }
 
     public function update($id, $attributes)
     {
-        // TODO: Implement update() method.
+       $student=$this->student->find($id);
+       $student->update($attributes);
+       return true;
     }
 
     public function delete($id)

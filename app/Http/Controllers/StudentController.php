@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreStudent;
+use App\Repositories\Course\CourseRepository;
 use App\Repositories\Student\ElequentStudent;
 use App\Repositories\Student\StudentRepository;
 use Illuminate\Http\Request;
@@ -10,29 +12,30 @@ use App\Student;
 class StudentController extends Controller
 {
     public $student;
+    public $course;
 
-    public function __construct(StudentRepository $student)
+    public function __construct(StudentRepository $student, CourseRepository $course)
     {
         $this->middleware('auth');
         $this->student = $student;
+        $this->course  = $course;
     }
 
     public function data()
     {
-     return $this->student->getAll();
+        return $this->student->getAll();
     }
 
     public function index()
     {
-        $courses = \App\Course::get();
-        echo "hello world";
+        $courses = $this->course->getAll();
 
         return view('students/index', compact('courses'));
     }
 
     public function create()
     {
-        $courses = \App\Course::get();
+        $courses = $this->course->getAll();
 
         return view('students/entry', compact('courses'));
     }
@@ -50,7 +53,7 @@ class StudentController extends Controller
 
     }
 
-    public function store()
+    public function store(StoreStudent $request)
     {
         $this->validate(request(), [
             'name'    => 'required',
@@ -59,15 +62,16 @@ class StudentController extends Controller
             'email'   => 'required',
             'course'  => 'required',
         ]);
-        $student          = new Student();
-        $student->name    = request('name');
-        $student->address = request('address');
-        $student->phone   = request('phone');
-        $student->email   = request('email');
-        $student->user_id = Auth()->id();
-        $student->save();
+        $studentArray = [
+            'name'    => $request->input('name'),
+            'address' => $request->input('address'),
+            'phone'   => $request->input('phone'),
+            'email'   => $request->input('email'),
+            'user_id' => Auth()->id(),
+        ];
+        $newstudent   = $this->student->create($studentArray);
 
-        $student->courses()->attach(request('course'));
+        $newstudent->courses()->attach(request('course'));
 
         return redirect('student');
 
@@ -75,8 +79,8 @@ class StudentController extends Controller
 
     public function edit($id)
     {
-        $student = Student::find($id);
-        $courses = \App\Course::get();
+        $student = $this->student->getById($id);
+        $courses = $this->course->getAll();
 
         return view('students/edit', compact('student', 'courses'));
     }
