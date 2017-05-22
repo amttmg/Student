@@ -15,10 +15,10 @@ class StudentController extends Controller
     public function index()
     {
         $courses = \App\Course::get();
+        echo "hello world";
 
         return view('students/index', compact('courses'));
     }
-
     public function create()
     {
         $courses = \App\Course::get();
@@ -57,15 +57,21 @@ class StudentController extends Controller
         $student->save();
 
         $student->courses()->attach(request('course'));
+
         return redirect('student');
 
     }
-    public function edit($id){
-        $student= Student::find($id);
+
+    public function edit($id)
+    {
+        $student = Student::find($id);
         $courses = \App\Course::get();
-        return view('students/edit', compact('student','courses'));
+
+        return view('students/edit', compact('student', 'courses'));
     }
-    public function update(Student $student){
+
+    public function update(Student $student)
+    {
         $this->validate(request(), [
             'name'    => 'required',
             'address' => 'required',
@@ -81,6 +87,7 @@ class StudentController extends Controller
         $student->user_id = Auth()->id();
         $student->courses()->sync(request('course'));
         $student->update();
+
         return redirect('student');
     }
 }
