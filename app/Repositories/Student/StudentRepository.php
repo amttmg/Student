@@ -11,6 +11,8 @@ interface StudentRepository
 {
     public function getAll();
 
+    public function getByIdWithCourse($id);
+
     public function getById($id);
 
     public function create($attributes);

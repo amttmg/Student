@@ -22,11 +22,6 @@ class StudentController extends Controller
         $this->course  = $course;
     }
 
-    public function data()
-    {
-        return $this->student->getAll();
-    }
-
     public function index()
     {
         $courses = $this->course->getAll();
@@ -60,21 +55,23 @@ class StudentController extends Controller
         $studentArray['user_id'] = Auth()->id();
         $newstudent              = $this->student->create($studentArray);
         $newstudent->courses()->attach(request('course'));
-        return redirect('student')->with(['success'=>'Successfully Saved']);
+
+        return redirect('student')->with(['success' => 'Successfully Saved']);
     }
 
     public function edit($id)
     {
-        $student = $this->student->getById($id);
+        $student = $this->student->getByIdWithCourse($id);
         $courses = $this->course->getAll();
         return view('students/edit', compact('student', 'courses'));
     }
 
     public function update($id, StoreStudent $request)
     {
-        $student      = $this->student->update($id, $request->only(['name', 'address', 'phone', 'email',]));
+        $student = $this->student->update($id, $request->only(['name', 'address', 'phone', 'email',]));
         $student->courses()->sync(request('course'));
         $student->update();
-        return redirect('student')->with(['success'=>'Successfully Updated']);
+
+        return redirect('student')->with(['success' => 'Successfully Updated']);
     }
 }

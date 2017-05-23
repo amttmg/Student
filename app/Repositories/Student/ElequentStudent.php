@@ -10,6 +10,7 @@ namespace App\Repositories\Student;
 
 
 use App\Student;
+use App\Course;
 
 /**
  * Class ElequentStudent
@@ -29,6 +30,9 @@ class ElequentStudent implements StudentRepository
     public function getAll()
     {
       return $this->student->all();
+    }
+    public function getByIdWithCourse($id){
+        return $this->student::with('Courses')->find($id);
     }
 
     public function getById($id)
