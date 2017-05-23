@@ -45,7 +45,7 @@ class ElequentStudent implements StudentRepository
     {
        $student=$this->student->find($id);
        $student->update($attributes);
-       return true;
+       return $student;
     }
 
     public function delete($id)

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Repositories\Course\CourseRepository;
+use Illuminate\Contracts\Session\Session;
 use Illuminate\Http\Request;
 
 class CourseController extends Controller

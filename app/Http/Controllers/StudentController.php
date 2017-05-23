@@ -7,6 +7,7 @@ use App\Repositories\Course\CourseRepository;
 use App\Repositories\Student\ElequentStudent;
 use App\Repositories\Student\StudentRepository;
 use Illuminate\Http\Request;
+use  Illuminate\Contracts\Session\Session;
 use App\Student;
 
 class StudentController extends Controller
@@ -55,54 +56,25 @@ class StudentController extends Controller
 
     public function store(StoreStudent $request)
     {
-        $this->validate(request(), [
-            'name'    => 'required',
-            'address' => 'required',
-            'phone'   => 'required',
-            'email'   => 'required',
-            'course'  => 'required',
-        ]);
-        $studentArray = [
-            'name'    => $request->input('name'),
-            'address' => $request->input('address'),
-            'phone'   => $request->input('phone'),
-            'email'   => $request->input('email'),
-            'user_id' => Auth()->id(),
-        ];
-        $newstudent   = $this->student->create($studentArray);
-
+        $studentArray            = $request->only(['name', 'address', 'phone', 'email',]);
+        $studentArray['user_id'] = Auth()->id();
+        $newstudent              = $this->student->create($studentArray);
         $newstudent->courses()->attach(request('course'));
-
-        return redirect('student');
-
+        return redirect('student')->with(['success'=>'Successfully Saved']);
     }
 
     public function edit($id)
     {
         $student = $this->student->getById($id);
         $courses = $this->course->getAll();
-
         return view('students/edit', compact('student', 'courses'));
     }
 
-    public function update(Student $student)
+    public function update($id, StoreStudent $request)
     {
-        $this->validate(request(), [
-            'name'    => 'required',
-            'address' => 'required',
-            'phone'   => 'required',
-            'email'   => 'required',
-            'course'  => 'required',
-        ]);
-
-        $student->name    = request('name');
-        $student->address = request('address');
-        $student->phone   = request('phone');
-        $student->email   = request('email');
-        $student->user_id = Auth()->id();
+        $student      = $this->student->update($id, $request->only(['name', 'address', 'phone', 'email',]));
         $student->courses()->sync(request('course'));
         $student->update();
-
-        return redirect('student');
+        return redirect('student')->with(['success'=>'Successfully Updated']);
     }
 }

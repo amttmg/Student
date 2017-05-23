@@ -4,6 +4,12 @@
   <div class="container">
     <div class="row">
       <div class="col-md-8 col-md-offset-2">
+        @if(Session::has('success'))
+          <p class="alert alert-success">{{ Session::get('success') }}</p>
+        @endif
+          @if(Session::has('error'))
+            <p class="alert alert-danger">{{ Session::get('error') }}</p>
+          @endif
         <div class="panel panel-default">
           <div class="panel-heading clearfix">
             <div class="col-md-4">
