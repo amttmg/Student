@@ -12,13 +12,19 @@ class StudentSeeder extends Seeder
      */
     public function run()
     {
-        $student = Student::create([
-            'name'    => 'Amrit Tamang',
-            'address' => 'Lalitpur',
-            'phone'   => '9842411793',
-            'email'   => 'amt.tmg@gmail.com',
-            'user_id' => 1,
-        ]);
-        $student->courses()->attach([1, 2]);
+        $fake= Faker\Factory::create();
+        Student::truncate();
+        DB::table('course_student')->truncate();
+        for ($i=1;$i<10;$i++)
+        {
+            $student = Student::create([
+                'name'    => $fake->name,
+                'address' => $fake->address,
+                'phone'   => $fake->phoneNumber,
+                'email'   => $fake->email,
+                'user_id' => 1,
+            ]);
+            $student->courses()->attach([$fake->numberBetween(1,2)]);
+        }
     }
 }

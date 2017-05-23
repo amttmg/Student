@@ -11,13 +11,14 @@ class CourseSeeder extends Seeder
      */
     public function run()
     {
+        Course::truncate();
         $courses = [
             [
                 'name'    => 'MBBS Preperation Class',
                 'remarks' => 'NA',
             ],
             [
-                'name'    => 'MBBS Preperation Class',
+                'name'    => 'BSC AG Preperation Class',
                 'remarks' => 'NA',
             ],
         ];
