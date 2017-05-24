@@ -14,12 +14,10 @@ class StudentServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        View::composer('students.form', function ($view) {
+        View::composer(['students.form','students.index'], function ($view) {
             $view->with('courses', \App\Course::get());
         });
-        View::composer('layouts.app', function ($view) {
-            $view->with('name', 'ABC Institute');
-        });
+        View::share('name', 'Name Institute');
     }
 
     /**

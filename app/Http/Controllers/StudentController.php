@@ -22,10 +22,9 @@ class StudentController extends Controller
         $this->student = $student;
         $this->course  = $course;
     }
+
     public function index()
     {
-        $courses = $this->course->getAll();
-
         return view('students/index', compact('courses'));
     }
 
@@ -39,6 +38,7 @@ class StudentController extends Controller
         $course_ids = request('course');
         if ($course_ids) {
             $courses = Course::with('Students')->whereIn('id', $course_ids)->get();
+
             return view('students/studentlist', compact('courses'));
         } else {
             return "No Data Found";
@@ -52,20 +52,25 @@ class StudentController extends Controller
         $studentArray['user_id'] = Auth()->id();
         $newstudent              = $this->student->create($studentArray);
         $newstudent->courses()->attach(request('course'));
-        return redirect('student')->with(['success'=>'Successfully Saved']);
+
+        return redirect('student')->with(['success' => 'Successfully Saved']);
     }
 
     public function edit($id)
     {
         $student = $this->student->getByIdWithCourse($id);
+
         return view('students/edit', compact('student'));
     }
 
     public function update($id, StoreStudent $request)
     {
-        $student      = $this->student->update($id, $request->only(['name', 'address', 'phone', 'email',]));
+        $studentDetails = $this->student->getById($id);
+        $this->authorize('edit', $studentDetails);
+        $student = $this->student->update($id, $request->only(['name', 'address', 'phone', 'email',]));
         $student->courses()->sync(request('course'));
         $student->update();
-        return redirect('student')->with(['success'=>'Successfully Updated']);
+
+        return redirect('student')->with(['success' => 'Successfully Updated']);
     }
 }
