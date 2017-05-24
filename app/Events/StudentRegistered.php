@@ -14,7 +14,8 @@ use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 class StudentRegistered
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
-public $student;
+    public $student;
+
     /**
      * Create a new event instance.
      *
@@ -22,7 +23,7 @@ public $student;
      */
     public function __construct(Student $student)
     {
-       $this->student=$student;
+        $this->student = $student;
     }
 
     /**

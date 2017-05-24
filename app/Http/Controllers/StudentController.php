@@ -31,9 +31,7 @@ class StudentController extends Controller
 
     public function create()
     {
-        $courses = $this->course->getAll();
-
-        return view('students/entry', compact('courses'));
+        return view('students/entry');
     }
 
     public function getByCagetory()
@@ -60,9 +58,7 @@ class StudentController extends Controller
     public function edit($id)
     {
         $student = $this->student->getByIdWithCourse($id);
-       ;
-        $courses = $this->course->getAll();
-        return view('students/edit', compact('student', 'courses'));
+        return view('students/edit', compact('student'));
     }
 
     public function update($id, StoreStudent $request)

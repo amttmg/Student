@@ -21,7 +21,11 @@
           <td>{{ $student->email }}</td>
           <td>{{ $student->phone }}</td>
           <td></td>
-          <td><a href="{{ url('studentedit') }}/{{ $student->id }}">Edit</a></td>
+          <td>
+          @can('edit', $student)
+            <a href="{{ url('studentedit') }}/{{ $student->id }}">Edit</a>
+          @endcan
+          </td>
         </tr>
       @endforeach
     @endforeach

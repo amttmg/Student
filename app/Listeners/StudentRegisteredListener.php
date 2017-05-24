@@ -26,6 +26,6 @@ class StudentRegisteredListener
      */
     public function handle(StudentRegistered $event)
     {
-        dd($event->student);
+//Send Email when new student registered.
     }
 }
