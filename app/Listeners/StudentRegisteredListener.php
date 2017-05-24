@@ -3,9 +3,9 @@
 namespace App\Listeners;
 
 use App\Events\StudentRegistered;
-use Illuminate\Queue\InteractsWithQueue;
-use Illuminate\Contracts\Queue\ShouldQueue;
-
+use App\Mail\WelcomeStudent;
+use Illuminate\Contracts\Mail\Mailable;
+use Illuminate\Support\Facades\Mail;
 class StudentRegisteredListener
 {
     /**
@@ -27,5 +27,6 @@ class StudentRegisteredListener
     public function handle(StudentRegistered $event)
     {
 //Send Email when new student registered.
+        Mail::to($event->student)->send(new WelcomeStudent());
     }
 }
