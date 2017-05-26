@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use GuzzleHttp\Psr7\Request;
 use Illuminate\Foundation\Http\FormRequest;
 
 class StoreStudent extends FormRequest
@@ -23,11 +24,12 @@ class StoreStudent extends FormRequest
      */
     public function rules()
     {
+        $request_data = $this->request->all();
         return [
             'name'    => 'required',
             'address' => 'required',
-            'phone'   => 'required',
-            'email'   => 'required',
+            'phone'   => 'required|unique:students,phone,'.$request_data['id'],
+            'email'   => 'required|unique:students,email,'.$request_data['id'],
             'course'  => 'required',
         ];
     }

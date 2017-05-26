@@ -1,5 +1,6 @@
 <form method="post">
   {{ csrf_field() }}
+  <input type="hidden" name="id" value="{{@$student->id}}">
   <div class="form-group {{ $errors->has('name') ? 'has-error' : '' }}">
     <label for="name">Full Name:</label>
     <input value="{{ old('name', @$student->name) }}" type="text" class="form-control" id="name" name="name">
@@ -51,7 +52,8 @@
               value="{{ $course->id }}"
               @if(in_array( $course->id, (old('course'))?old('course'):[])) checked @endif
               @if(@$student)
-              @if(in_array( $course->id, (array_pluck(@$student->courses, 'id'))?array_pluck(@$student->courses, 'id'):[])) checked @endif
+              @if(in_array( $course->id, (array_pluck(@$student->courses, 'id'))?array_pluck(@$student->courses, 'id'):[])) checked
+              @endif
               @endif
               type="checkbox">
           {{ $course->name }}
