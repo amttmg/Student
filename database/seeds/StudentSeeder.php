@@ -12,11 +12,10 @@ class StudentSeeder extends Seeder
      */
     public function run()
     {
-        $fake= Faker\Factory::create();
+        $fake = Faker\Factory::create();
         Student::truncate();
         DB::table('course_student')->truncate();
-        for ($i=1;$i<10;$i++)
-        {
+        for ($i = 1; $i < 10; $i++) {
             $student = Student::create([
                 'name'    => $fake->name,
                 'address' => $fake->address,
@@ -24,7 +23,7 @@ class StudentSeeder extends Seeder
                 'email'   => $fake->email,
                 'user_id' => 1,
             ]);
-            $student->courses()->attach([$fake->numberBetween(1,2)]);
+            $student->courses()->attach([$fake->numberBetween(1, 2)]);
         }
     }
 }

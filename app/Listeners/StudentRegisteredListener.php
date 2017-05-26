@@ -27,6 +27,6 @@ class StudentRegisteredListener
     public function handle(StudentRegistered $event)
     {
 //Send Email when new student registered.
-      //  Mail::to($event->student)->send(new WelcomeStudent());
+       //Mail::to($event->student)->send(new WelcomeStudent());
     }
 }
