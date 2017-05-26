@@ -19,6 +19,7 @@ class StudentPolicy
     {
         //
     }
+
     public function edit(User $user, Student $student)
     {
         return $user->owns($student);
