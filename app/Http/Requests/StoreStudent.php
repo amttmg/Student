@@ -28,8 +28,8 @@ class StoreStudent extends FormRequest
         return [
             'name'    => 'required',
             'address' => 'required',
-            'phone'   => 'required|unique:students,phone,'.$request_data['id'],
-            'email'   => 'required|unique:students,email,'.$request_data['id'],
+            'phone'   => 'required|min:9|max:10|numeric|unique:students,phone,'.$request_data['id'],
+            'email'   => 'required|E-Mail|unique:students,email,'.$request_data['id'],
             'course'  => 'required',
         ];
     }

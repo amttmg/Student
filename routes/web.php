@@ -24,3 +24,4 @@ Route::post('/studententry', 'StudentController@store');
 Route::get('/studentedit/{id}', 'StudentController@edit');
 Route::post('/studentedit/{student}', 'StudentController@update');
 Route::get('/data','StudentController@data');
+Route::get('/vue','VueController@index');
