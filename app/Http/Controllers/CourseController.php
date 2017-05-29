@@ -12,13 +12,16 @@ class CourseController extends Controller
      * CourseController constructor.
      */
     private $course;
+
     public function __construct(CourseRepository $course)
     {
-        $this->course=$course;
+        $this->course = $course;
     }
 
-    public  function index(){
-       $course= $this->course->getById(1);
-       return $course;
-   }
+    public function index()
+    {
+        $course = $this->course->getById(1);
+
+        return $course;
+    }
 }

@@ -14,7 +14,7 @@ class StudentServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        View::composer(['students.form','students.index'], function ($view) {
+        View::composer(['students.form', 'students.index'], function ($view) {
             $view->with('courses', \App\Course::get());
         });
         View::share('name', 'Name Institute');
